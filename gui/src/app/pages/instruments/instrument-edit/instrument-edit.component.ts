@@ -124,7 +124,7 @@ export class InstrumentEditComponent {
   // input signal for 'id' route param (configured in router config)
   id = input<string>();
 
-  isEditMode = signal(false);
+  isEditMode = signal(true);
   types = Object.values(InstrumentType);
 
   instrumentForm = this.fb.group({

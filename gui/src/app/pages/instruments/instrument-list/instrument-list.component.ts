@@ -196,7 +196,7 @@ export class InstrumentListComponent implements OnInit {
   filter = signal('');
 
   // Chapter 5 - Feature Flag for UI display
-  showDiscountBanner = signal(false);
+  showDiscountBanner = signal(true);
 
   instrumentsResource = resource({
     request: () => ({ q: this.filter() }),

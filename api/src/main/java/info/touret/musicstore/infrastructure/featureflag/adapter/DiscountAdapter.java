@@ -8,19 +8,33 @@ import jakarta.enterprise.context.ApplicationScoped;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-// TODO: Uncomment to use OpenFeature
-// import dev.openfeature.sdk.Client;
-// import dev.openfeature.sdk.MutableContext;
-// import dev.openfeature.sdk.OpenFeatureAPI;
+import dev.openfeature.sdk.Client;
+import dev.openfeature.sdk.MutableContext;
+import dev.openfeature.sdk.OpenFeatureAPI;
 
 @ApplicationScoped
 public class DiscountAdapter implements DiscountPort {
     private static final Logger LOGGER = LoggerFactory.getLogger(DiscountAdapter.class);
+    private final OpenFeatureAPI openFeatureAPI;
+
+    public DiscountAdapter(OpenFeatureAPI openFeatureAPI) {
+        this.openFeatureAPI = openFeatureAPI;
+    }
+
     @Override
     public Result<Instrument> applyDiscount(Instrument instrument, User user) {
         // For now, let's keep it simple (manually toggle for testing if needed)
+
         boolean manualDiscount = false; // Toggle to true to test UI
-        if (manualDiscount) {
+ /*r       var evaluationDetails = this.openFeatureAPI.getClient().getBooleanDetails("discount-enabled", false);
+        LOGGER.info(evaluationDetails.toString());
+        boolean isDiscountEnabled = evaluationDetails.getValue();
+*/
+        var evaluationDetails = this.openFeatureAPI.getClient().getBooleanDetails("discount-enabled", false);
+        LOGGER.info(evaluationDetails.toString());
+        boolean isDiscountEnabled = evaluationDetails.getValue();
+
+        if (isDiscountEnabled) {
             LOGGER.debug("Applying Discount");
             double originalPrice = instrument.price();
             double discountedPrice = originalPrice * 0.9; // 10% discount
