@@ -26,11 +26,15 @@ public class DiscountAdapter implements DiscountPort {
         // For now, let's keep it simple (manually toggle for testing if needed)
 
         boolean manualDiscount = false; // Toggle to true to test UI
- /*r       var evaluationDetails = this.openFeatureAPI.getClient().getBooleanDetails("discount-enabled", false);
-        LOGGER.info(evaluationDetails.toString());
-        boolean isDiscountEnabled = evaluationDetails.getValue();
-*/
-        var evaluationDetails = this.openFeatureAPI.getClient().getBooleanDetails("discount-enabled", false);
+        /*
+         * r var evaluationDetails =
+         * this.openFeatureAPI.getClient().getBooleanDetails("discount-enabled", false);
+         * LOGGER.info(evaluationDetails.toString());
+         * boolean isDiscountEnabled = evaluationDetails.getValue();
+         */
+        var openFeatureAPIClient = this.openFeatureAPI.getClient();
+        openFeatureAPIClient.setEvaluationContext(new MutableContext().add("clientCountry", user.country()));
+        var evaluationDetails = openFeatureAPIClient.getBooleanDetails("discount-enabled", false);
         LOGGER.info(evaluationDetails.toString());
         boolean isDiscountEnabled = evaluationDetails.getValue();
 
