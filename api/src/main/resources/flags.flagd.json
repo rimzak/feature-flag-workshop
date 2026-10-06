@@ -8,6 +8,15 @@
             "state": "ENABLED",
             "defaultVariant": "on"
         },
+        "discount-amount": {
+            "state": "ENABLED",
+            "variants": {
+                "10-percent": 0.1,
+                "20-percent": 0.2,
+                "50-percent": 0.5
+            },
+            "defaultVariant": "10-percent"
+        },
         "discount-enabled": {
             "variants": {
                 "on": true,
